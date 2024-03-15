@@ -1,23 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import React from "react";
+import "./App.css";
+import { Button } from "./components/ui/button";
+
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "./components/ui/input-otp";
+
+export function InputOTPControlled() {
+  const [value, setValue] = React.useState("");
+
+  return (
+    <div className="space-y-2">
+      <InputOTP
+        maxLength={6}
+        value={value}
+        onChange={(value) => setValue(value)}
+        render={({ slots }) => (
+          <InputOTPGroup>
+            {slots.map((slot, index) => (
+              <InputOTPSlot key={index} {...slot} />
+            ))}{" "}
+          </InputOTPGroup>
+        )}
+      />
+      <div className="text-center text-sm">
+        {value === "" ? (
+          <>Enter your one-time password.</>
+        ) : (
+          <>You entered: {value}</>
+        )}
+      </div>
+    </div>
+  );
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="flex flex-row">
+      <Button>Button</Button>
+
+      <InputOTPControlled />
     </div>
   );
 }
